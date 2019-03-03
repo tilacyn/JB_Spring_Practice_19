@@ -1,16 +1,18 @@
 package dijkstra
 
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.collections.ArrayList
 
 class Node {
     private val _outgoingEdges = arrayListOf<Edge>()
     val outgoingEdges: List<Edge> = _outgoingEdges
 
-    var distance = Integer.MAX_VALUE // USE ME FOR THE DIJKSTRA ALGORITHM!
+    var distance = AtomicInteger(Int.MAX_VALUE) // USE ME FOR THE DIJKSTRA ALGORITHM!
 
     fun addEdge(edge: Edge) {
         _outgoingEdges.add(edge)
+        println(4)
     }
 }
 
@@ -20,7 +22,7 @@ fun randomConnectedGraph(nodes: Int, edges: Int, maxWeight: Int = 100): List<Nod
     require(edges >= nodes - 1)
     val r = Random()
     val nodesList = List(nodes) { Node() }
-    // generate a random connected graph with `nodes-1` edges
+    // generate a r andom connected graph with `nodes-1` edges
     val s = ArrayList(nodesList)
     var cur = s.removeAt(r.nextInt(s.size))
     val visited = mutableSetOf<Node>(cur)
@@ -48,5 +50,5 @@ fun randomConnectedGraph(nodes: Int, edges: Int, maxWeight: Int = 100): List<Nod
 }
 
 fun clearNodes(nodes: List<Node>) {
-    nodes.forEach { it.distance = Int.MAX_VALUE }
+    nodes.forEach { it.distance.set(Int.MAX_VALUE) }
 }
